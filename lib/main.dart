@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import './transaction.dart';
 
 void main() => runApp(MyApp());
@@ -33,31 +34,35 @@ class MyHomePage extends StatelessWidget {
           Column(
             children: transactions
                 .map((tx) => Card(
-                        child: Row(
-                      children: [
-                        Container(
+                        child: Row(children: [
+                      Container(
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 15),
                           decoration: BoxDecoration(
                               border: Border.all(
-                            color: Colors.black,
+                            color: Colors.blue,
                             width: 2,
                           )),
                           padding: EdgeInsets.all(5),
                           child: Text(
                             tx.amount.toString(),
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.blue),
+                          )),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            tx.title,
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        Column(
-                          children: [
-                            Text(tx.title),
-                            Text(tx.date.toString()),
-                          ],
-                        )
-                      ],
-                    )))
+                          Text(DateFormat.yMMMd().format(tx.date)),
+                        ],
+                      )
+                    ])))
                 .toList(),
           )
         ],
