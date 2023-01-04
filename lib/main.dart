@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import './transaction.dart';
+import 'widgets/transaction.dart';
+import 'models/transaction_list.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -19,12 +19,10 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction(
-        id: 't1', title: 'New shoes', amount: 69.99, date: DateTime.now())
-  ];
-
   MyHomePage({super.key});
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,49 +40,21 @@ class MyHomePage extends StatelessWidget {
                   children: [
                     TextField(
                       decoration: InputDecoration(labelText: "Title"),
+                      controller: titleController,
                     ),
                     TextField(
                       decoration: InputDecoration(labelText: "Amount"),
+                      controller: amountController,
                     ),
                     ElevatedButton(
-                        onPressed: () {}, child: Text('Add transaction'))
+                        onPressed: () {
+                          print(titleController);
+                        },
+                        child: Text('Add transaction'))
                   ],
                 ),
               )),
-          Column(
-            children: transactions
-                .map((tx) => Card(
-                        child: Row(children: [
-                      Container(
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 15),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                            color: Colors.blue,
-                            width: 2,
-                          )),
-                          padding: const EdgeInsets.all(5),
-                          child: Text(
-                            tx.amount.toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.blue),
-                          )),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            tx.title,
-                            style: const TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.bold),
-                          ),
-                          Text(DateFormat.yMMMd().format(tx.date)),
-                        ],
-                      )
-                    ])))
-                .toList(),
-          )
+          TransactionList(),
         ],
       ),
     );
