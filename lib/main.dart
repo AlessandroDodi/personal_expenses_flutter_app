@@ -1,10 +1,14 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import './transaction.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,6 +23,8 @@ class MyHomePage extends StatelessWidget {
     Transaction(
         id: 't1', title: 'New shoes', amount: 69.99, date: DateTime.now())
   ];
+
+  MyHomePage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,25 +34,39 @@ class MyHomePage extends StatelessWidget {
       body: Column(
         children: [
           Card(
-            child: Container(child: Text('expenses'), width: double.infinity),
-            elevation: 5,
-          ),
+              elevation: 5,
+              child: Container(
+                padding: EdgeInsets.all(2),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(labelText: "Title"),
+                    ),
+                    TextField(
+                      decoration: InputDecoration(labelText: "Amount"),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {}, child: Text('Add transaction'))
+                  ],
+                ),
+              )),
           Column(
             children: transactions
                 .map((tx) => Card(
                         child: Row(children: [
                       Container(
-                          margin: EdgeInsets.symmetric(
+                          margin: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 15),
                           decoration: BoxDecoration(
                               border: Border.all(
                             color: Colors.blue,
                             width: 2,
                           )),
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           child: Text(
                             tx.amount.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
                                 color: Colors.blue),
@@ -56,7 +76,7 @@ class MyHomePage extends StatelessWidget {
                         children: [
                           Text(
                             tx.title,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 17, fontWeight: FontWeight.bold),
                           ),
                           Text(DateFormat.yMMMd().format(tx.date)),
