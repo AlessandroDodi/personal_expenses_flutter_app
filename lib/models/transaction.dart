@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Transaction {
   final String id;
   final String title;
