@@ -43,7 +43,9 @@ class TransactionList extends StatelessWidget {
                         style: const TextStyle(
                             fontSize: 17, fontWeight: FontWeight.bold),
                       ),
-                      Text(DateFormat.yMMMd().format(transactions[index].date)),
+                      Text(
+                        DateFormat.yMMMd().format(transactions[index].date),
+                      ),
                     ],
                   )
                 ]));
