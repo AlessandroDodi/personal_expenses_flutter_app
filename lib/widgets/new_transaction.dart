@@ -17,8 +17,9 @@ class _NewTransactionState extends State<NewTransaction> {
   void _submitData() {
     final enteredTitle = _titleController.text;
     final enteredAmount = double.tryParse(_amountController.text) ?? 0.00;
-    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null)
+    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
       return;
+    }
 
     widget.buttonHandler(enteredTitle, enteredAmount, _selectedDate);
     Navigator.of(context).pop();
@@ -53,7 +54,7 @@ class _NewTransactionState extends State<NewTransaction> {
                 onSubmitted: (_) => _submitData(),
               ),
               TextField(
-                decoration: InputDecoration(labelText: "Amount"),
+                decoration: const InputDecoration(labelText: "Amount"),
                 controller: _amountController,
                 keyboardType: TextInputType.number,
                 onSubmitted: (_) => _submitData(),

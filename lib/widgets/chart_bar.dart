@@ -8,41 +8,46 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(3),
-      child: Column(
-        children: [
-          FittedBox(child: Text('\$${spending.toStringAsFixed(0)}')),
-          SizedBox(
-            height: 4,
-          ),
-          Container(
-            height: 60,
-            width: 10,
-            child: Stack(children: [
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Color.fromARGB(0, 140, 140, 140),
-                    ),
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(10)),
+    return LayoutBuilder(
+      builder: (ctx, constraints) {
+        return Container(
+          height: constraints.maxHeight,
+          margin: EdgeInsets.all(3),
+          child: Column(
+            children: [
+              FittedBox(child: Text('\$${spending.toStringAsFixed(0)}')),
+              SizedBox(
+                height: 4,
               ),
-              FractionallySizedBox(
-                heightFactor: spendingPctOfTotal,
-                child: Container(
+              Container(
+                height: constraints.maxHeight * .70,
+                width: 10,
+                child: Stack(children: [
+                  Container(
                     decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(10))),
-              )
-            ]),
+                        border: Border.all(
+                          color: Color.fromARGB(0, 140, 140, 140),
+                        ),
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                  FractionallySizedBox(
+                    heightFactor: spendingPctOfTotal,
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(10))),
+                  )
+                ]),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Text(label)
+            ],
           ),
-          SizedBox(
-            height: 4,
-          ),
-          Text(label)
-        ],
-      ),
+        );
+      },
     );
   }
 }

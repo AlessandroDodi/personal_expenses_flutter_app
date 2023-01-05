@@ -1,12 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'widgets/new_transaction.dart';
 import 'widgets/transaction_list.dart';
 import 'models/transaction.dart';
 import 'widgets/chart.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+  );
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -70,23 +77,34 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  final appBar = AppBar(
+    title: Text('Personal Expenses'),
+    actions: <Widget>[
+      IconButton(
+        icon: Icon(Icons.add),
+        onPressed: () {},
+      )
+    ],
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Personal Expenses'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {},
-          )
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
           child: Column(
         children: [
-          TransactionList(_userTransaction, _deleteTransactions),
-          Chart(_recentTransactions)
+          Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.3,
+              child: Chart(_recentTransactions)),
+          Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.7,
+              child: TransactionList(_userTransaction, _deleteTransactions)),
         ],
       )),
       floatingActionButton: FloatingActionButton(
