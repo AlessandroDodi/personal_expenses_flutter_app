@@ -1,6 +1,10 @@
 # personal_expenses_flutter_app
 
-A new Flutter project.
+This is a personal expenses flutter app. It is a project inside the course <strong>Flutter & Dart - The Complete Guide [2023 Edition]</strong>
+
+![home](https://user-images.githubusercontent.com/96247758/210770293-1f40e741-2b06-488d-8880-58929343269b.png)
+
+The app does not store informations. There are no API calls. It's a simple project with the purpose to practice Widgets and the basic syntax of Flutter.
 
 ## Getting Started
 
