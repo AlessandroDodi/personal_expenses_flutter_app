@@ -30,10 +30,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransaction = [
-    // Transaction(
-    //     id: 't1', title: 'New shoes', amount: 69.99, date: DateTime.now()),
-    // Transaction(
-    //     id: 't2', title: 'New phone', amount: 1999.99, date: DateTime.now())
+    Transaction(
+        id: 't1', title: 'New shoes', amount: 69.99, date: DateTime.now()),
+    Transaction(
+        id: 't2', title: 'New phone', amount: 1999.99, date: DateTime.now())
   ];
   List<Transaction> get _recentTransactions {
     return _userTransaction.where((tx) {
@@ -45,11 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime date) {
     final nexTx = Transaction(
         title: title,
         amount: amount,
-        date: DateTime.now(),
+        date: date,
         id: DateTime.now().toString());
     setState(() {
       _userTransaction.add(nexTx);
@@ -62,6 +62,12 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (bCtx) {
           return NewTransaction(_addNewTransaction);
         });
+  }
+
+  void _deleteTransactions(String id) {
+    setState(() {
+      _userTransaction.removeWhere((element) => element.id == id);
+    });
   }
 
   @override
@@ -79,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
           child: Column(
         children: [
-          TransactionList(_userTransaction),
+          TransactionList(_userTransaction, _deleteTransactions),
           Chart(_recentTransactions)
         ],
       )),

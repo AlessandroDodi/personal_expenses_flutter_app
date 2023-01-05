@@ -20,7 +20,7 @@ class _NewTransactionState extends State<NewTransaction> {
     if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null)
       return;
 
-    widget.buttonHandler(enteredTitle, enteredAmount);
+    widget.buttonHandler(enteredTitle, enteredAmount, _selectedDate);
     Navigator.of(context).pop();
   }
 
