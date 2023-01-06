@@ -6,7 +6,7 @@ import '../models/transaction.dart';
 class Chart extends StatelessWidget {
   //const Chart({super.key});
   final List<Transaction> recentTransactions;
-  Chart(this.recentTransactions);
+  const Chart(this.recentTransactions, {super.key});
   List<Map<String, Object>> get groupedTransactionValues {
     return List.generate(7, (index) {
       final weekDay = DateTime.now().subtract(Duration(days: index));
@@ -33,26 +33,25 @@ class Chart extends StatelessWidget {
             (previousValue + (element['amount'] as double)));
   }
 
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Card(
-        elevation: 6,
-        margin: EdgeInsets.all(20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: groupedTransactionValues.map((data) {
-            return Flexible(
-              fit: FlexFit.tight,
-              child: ChartBar(
-                data['day'].toString(),
-                (data['amount'] as double),
-                maxSpending == 0.0
-                    ? 0.0
-                    : (data['amount'] as double) / maxSpending,
-              ),
-            );
-          }).toList(),
-        ),
+    return Card(
+      elevation: 6,
+      margin: const EdgeInsets.all(20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: groupedTransactionValues.map((data) {
+          return Flexible(
+            fit: FlexFit.tight,
+            child: ChartBar(
+              data['day'].toString(),
+              (data['amount'] as double),
+              maxSpending == 0.0
+                  ? 0.0
+                  : (data['amount'] as double) / maxSpending,
+            ),
+          );
+        }).toList(),
       ),
     );
   }

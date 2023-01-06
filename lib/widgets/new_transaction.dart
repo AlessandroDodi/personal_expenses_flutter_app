@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 class NewTransaction extends StatefulWidget {
   // const NewTransaction({super.key});
   final Function buttonHandler;
-  NewTransaction(this.buttonHandler);
+  const NewTransaction(this.buttonHandler, {super.key});
 
   @override
   State<NewTransaction> createState() => _NewTransactionState();
@@ -35,7 +35,6 @@ class _NewTransactionState extends State<NewTransaction> {
             firstDate: DateTime(2019),
             lastDate: DateTime.now())
         .then((pickedDate) {
-      print(pickedDate);
       setState(() {
         _selectedDate = pickedDate;
       });
@@ -63,7 +62,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         controller: _titleController,
                       )
                     : TextField(
-                        decoration: InputDecoration(labelText: "Title"),
+                        decoration: const InputDecoration(labelText: "Title"),
                         controller: _titleController,
                         onSubmitted: (_) => _submitData(),
                       ),
@@ -82,7 +81,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         keyboardType: TextInputType.number,
                         onSubmitted: (_) => _submitData(),
                       ),
-                Container(
+                SizedBox(
                   height: 60,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -94,22 +93,22 @@ class _NewTransactionState extends State<NewTransaction> {
                       ),
                       Platform.isIOS
                           ? CupertinoButton(
-                              child: Text('Choose date'),
-                              onPressed: _presentDatePicker)
+                              onPressed: _presentDatePicker,
+                              child: const Text('Choose date'))
                           : ElevatedButton(
                               onPressed: _presentDatePicker,
-                              child: Text('Choose date'),
+                              child: const Text('Choose date'),
                             ),
                     ],
                   ),
                 ),
                 Platform.isIOS
                     ? CupertinoButton(
-                        child: Text('Add transaction'),
+                        child: const Text('Add transaction'),
                         onPressed: () => _submitData())
                     : ElevatedButton(
                         onPressed: () => _submitData(),
-                        child: Text('Add transaction'))
+                        child: const Text('Add transaction'))
               ],
             ),
           )),

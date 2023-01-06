@@ -4,7 +4,8 @@ class ChartBar extends StatelessWidget {
   final String label;
   final double spending;
   final double spendingPctOfTotal;
-  ChartBar(this.label, this.spending, this.spendingPctOfTotal);
+  const ChartBar(this.label, this.spending, this.spendingPctOfTotal,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,21 +13,21 @@ class ChartBar extends StatelessWidget {
       builder: (ctx, constraints) {
         return Container(
           height: constraints.maxHeight,
-          margin: EdgeInsets.all(3),
+          margin: const EdgeInsets.all(3),
           child: Column(
             children: [
               FittedBox(child: Text('\$${spending.toStringAsFixed(0)}')),
-              SizedBox(
+              const SizedBox(
                 height: 4,
               ),
-              Container(
+              SizedBox(
                 height: constraints.maxHeight * .70,
                 width: 10,
                 child: Stack(children: [
                   Container(
                     decoration: BoxDecoration(
                         border: Border.all(
-                          color: Color.fromARGB(0, 140, 140, 140),
+                          color: const Color.fromARGB(0, 140, 140, 140),
                         ),
                         color: Colors.amber,
                         borderRadius: BorderRadius.circular(10)),
@@ -40,7 +41,7 @@ class ChartBar extends StatelessWidget {
                   )
                 ]),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 4,
               ),
               Text(label)

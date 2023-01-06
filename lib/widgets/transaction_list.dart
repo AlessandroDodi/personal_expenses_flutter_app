@@ -6,16 +6,17 @@ class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
   final Function deleteTx;
 
-  TransactionList(this.transactions, this.deleteTx);
+  const TransactionList(this.transactions, this.deleteTx, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: transactions.isEmpty
-          ? Container(
+          ? SizedBox(
               height: 10,
               child: Image.asset('assets/images/No data-cuate.png',
-                  fit: BoxFit.contain))
+                  fit: BoxFit.contain),
+            )
           : ListView.builder(
               itemBuilder: (context, index) {
                 return Card(
@@ -55,7 +56,7 @@ class TransactionList extends StatelessWidget {
                       ),
                       IconButton(
                           onPressed: () => deleteTx(transactions[index].id),
-                          icon: Icon(Icons.delete))
+                          icon: const Icon(Icons.delete))
                     ],
                   ),
                 );
