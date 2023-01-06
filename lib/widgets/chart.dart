@@ -28,9 +28,10 @@ class Chart extends StatelessWidget {
 
   double get maxSpending {
     return groupedTransactionValues.fold(
-        0.0,
-        (previousValue, element) =>
-            (previousValue + (element['amount'] as double)));
+      0.0,
+      (previousValue, element) =>
+          (previousValue + (element['amount'] as double)),
+    );
   }
 
   @override

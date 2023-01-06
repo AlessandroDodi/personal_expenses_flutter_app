@@ -42,6 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Transaction(
         id: 't2', title: 'New phone', amount: 1999.99, date: DateTime.now())
   ];
+
   List<Transaction> get _recentTransactions {
     return _userTransaction.where((tx) {
       return tx.date.isAfter(
@@ -80,49 +81,54 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final PreferredSizeWidget pageAppBar = Platform.isIOS
-        ? CupertinoNavigationBar(
-            middle: const Text('Personal Expenses'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                GestureDetector(
-                  onTap: () => _startAddNewTransaction(context),
-                  child: const Icon(CupertinoIcons.add),
-                ),
-              ],
-            ),
-          )
-        : AppBar(
-            title: const Text('Personal Expenses'),
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () {},
-              )
-            ],
-          ) as PreferredSizeWidget;
 
+    Widget buildAppBar() {
+      return Platform.isIOS
+          ? CupertinoNavigationBar(
+              middle: const Text('Personal Expenses'),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GestureDetector(
+                    onTap: () => _startAddNewTransaction(context),
+                    child: const Icon(CupertinoIcons.add),
+                  ),
+                ],
+              ),
+            )
+          : AppBar(
+              title: const Text('Personal Expenses'),
+              actions: <Widget>[
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: () {},
+                )
+              ],
+            );
+    }
+
+    final pageAppBar = buildAppBar() as PreferredSizeWidget;
     final pageBody = SafeArea(
       child: SingleChildScrollView(
-          child: Column(
-        children: [
-          SizedBox(
-            height: (mediaQuery.size.height -
-                    pageAppBar.preferredSize.height -
-                    mediaQuery.padding.top) *
-                0.3,
-            child: Chart(_recentTransactions),
-          ),
-          SizedBox(
-            height: (mediaQuery.size.height -
-                    pageAppBar.preferredSize.height -
-                    mediaQuery.padding.top) *
-                0.7,
-            child: TransactionList(_userTransaction, _deleteTransactions),
-          ),
-        ],
-      )),
+        child: Column(
+          children: [
+            SizedBox(
+              height: (mediaQuery.size.height -
+                      pageAppBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.3,
+              child: Chart(_recentTransactions),
+            ),
+            SizedBox(
+              height: (mediaQuery.size.height -
+                      pageAppBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.7,
+              child: TransactionList(_userTransaction, _deleteTransactions),
+            ),
+          ],
+        ),
+      ),
     );
     return Platform.isIOS
         ? CupertinoPageScaffold(

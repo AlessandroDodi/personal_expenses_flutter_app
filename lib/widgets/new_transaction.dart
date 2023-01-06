@@ -30,11 +30,11 @@ class _NewTransactionState extends State<NewTransaction> {
 
   void _presentDatePicker() {
     showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2019),
-            lastDate: DateTime.now())
-        .then((pickedDate) {
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2019),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
       setState(() {
         _selectedDate = pickedDate;
       });
@@ -74,6 +74,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         onSubmitted: (_) => _submitData(),
                         placeholder: "Amount",
                         controller: _amountController,
+                        keyboardType: TextInputType.number,
                       )
                     : TextField(
                         decoration: const InputDecoration(labelText: "Amount"),
