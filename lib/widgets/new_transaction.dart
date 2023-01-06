@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -53,17 +56,32 @@ class _NewTransactionState extends State<NewTransaction> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextField(
-                  decoration: InputDecoration(labelText: "Title"),
-                  controller: _titleController,
-                  onSubmitted: (_) => _submitData(),
+                Platform.isIOS
+                    ? CupertinoTextField(
+                        onSubmitted: (_) => _submitData(),
+                        placeholder: "Title",
+                        controller: _titleController,
+                      )
+                    : TextField(
+                        decoration: InputDecoration(labelText: "Title"),
+                        controller: _titleController,
+                        onSubmitted: (_) => _submitData(),
+                      ),
+                Container(
+                  height: 8,
                 ),
-                TextField(
-                  decoration: const InputDecoration(labelText: "Amount"),
-                  controller: _amountController,
-                  keyboardType: TextInputType.number,
-                  onSubmitted: (_) => _submitData(),
-                ),
+                Platform.isIOS
+                    ? CupertinoTextField(
+                        onSubmitted: (_) => _submitData(),
+                        placeholder: "Amount",
+                        controller: _amountController,
+                      )
+                    : TextField(
+                        decoration: const InputDecoration(labelText: "Amount"),
+                        controller: _amountController,
+                        keyboardType: TextInputType.number,
+                        onSubmitted: (_) => _submitData(),
+                      ),
                 Container(
                   height: 60,
                   child: Row(
@@ -74,16 +92,24 @@ class _NewTransactionState extends State<NewTransaction> {
                             ? 'No date chosen!'
                             : 'Picked date: ${DateFormat.yMd().format(_selectedDate!).toString()}'),
                       ),
-                      ElevatedButton(
-                        onPressed: _presentDatePicker,
-                        child: Text('Choose date'),
-                      ),
+                      Platform.isIOS
+                          ? CupertinoButton(
+                              child: Text('Choose date'),
+                              onPressed: _presentDatePicker)
+                          : ElevatedButton(
+                              onPressed: _presentDatePicker,
+                              child: Text('Choose date'),
+                            ),
                     ],
                   ),
                 ),
-                ElevatedButton(
-                    onPressed: () => _submitData(),
-                    child: Text('Add transaction'))
+                Platform.isIOS
+                    ? CupertinoButton(
+                        child: Text('Add transaction'),
+                        onPressed: () => _submitData())
+                    : ElevatedButton(
+                        onPressed: () => _submitData(),
+                        child: Text('Add transaction'))
               ],
             ),
           )),
