@@ -1,6 +1,6 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'widgets/new_transaction.dart';
 import 'widgets/transaction_list.dart';
@@ -77,44 +77,69 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  final appBar = AppBar(
-    title: Text('Personal Expenses'),
-    actions: <Widget>[
-      IconButton(
-        icon: Icon(Icons.add),
-        onPressed: () {},
-      )
-    ],
-  );
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
+    final mediaQuery = MediaQuery.of(context);
+    final PreferredSizeWidget pageAppBar = Platform.isIOS
+        ? CupertinoNavigationBar(
+            middle: Text('Personal Expenses'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () => _startAddNewTransaction(context),
+                  child: Icon(CupertinoIcons.add),
+                ),
+              ],
+            ),
+          )
+        : AppBar(
+            title: Text('Personal Expenses'),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {},
+              )
+            ],
+          ) as PreferredSizeWidget;
+
+    final pageBody = SafeArea(
+      child: SingleChildScrollView(
           child: Column(
         children: [
           Container(
-            height: (MediaQuery.of(context).size.height -
-                    appBar.preferredSize.height -
-                    MediaQuery.of(context).padding.top) *
+            height: (mediaQuery.size.height -
+                    pageAppBar.preferredSize.height -
+                    mediaQuery.padding.top) *
                 0.3,
             child: Chart(_recentTransactions),
           ),
           Container(
-            height: (MediaQuery.of(context).size.height -
-                    appBar.preferredSize.height -
-                    MediaQuery.of(context).padding.top) *
+            height: (mediaQuery.size.height -
+                    pageAppBar.preferredSize.height -
+                    mediaQuery.padding.top) *
                 0.7,
             child: TransactionList(_userTransaction, _deleteTransactions),
           ),
         ],
       )),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          _startAddNewTransaction(context);
-        },
-      ),
     );
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            child: pageBody,
+            navigationBar: pageAppBar as ObstructingPreferredSizeWidget,
+          )
+        : Scaffold(
+            appBar: pageAppBar,
+            body: pageBody,
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    child: Icon(Icons.add),
+                    onPressed: () {
+                      _startAddNewTransaction(context);
+                    },
+                  ),
+          );
   }
 }
