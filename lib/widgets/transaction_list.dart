@@ -17,12 +17,13 @@ class TransactionList extends StatelessWidget {
               child: Image.asset('assets/images/No data-cuate.png',
                   fit: BoxFit.contain),
             )
-          : ListView.builder(
-              itemBuilder: (context, index) {
-                return TransactionItem(
-                    transaction: transactions[index], deleteTx: deleteTx);
-              },
-              itemCount: transactions.length,
+          : ListView(
+              children: transactions
+                  .map((el) => TransactionItem(
+                      key: ValueKey(el.id),
+                      transaction: el,
+                      deleteTx: deleteTx))
+                  .toList(),
             ),
     );
   }
